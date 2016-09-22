@@ -14,7 +14,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | A list of the exception types that should not be captured.
+    | A list of the exception types that should be captured.
     |--------------------------------------------------------------------------
     |
     | For which exception class emails should be sent?
