@@ -20,7 +20,15 @@ class SneakerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // 
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'sneaker');
+
+        $this->publishes([
+            __DIR__ . '/../resources/views/email' => resource_path('views/vendor/sneaker/email')
+        ], 'views');
+
+        $this->publishes([
+            __DIR__.'/../config/sneaker.php' => config_path('sneaker.php'),
+        ], 'config');
     }
 
     /**
@@ -30,6 +38,12 @@ class SneakerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // 
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/sneaker.php', 'sneaker'
+        );
+
+        $this->app->singleton('sneaker', function () {
+            return $this->app->make(Sneaker::class);
+        });
     }
 }

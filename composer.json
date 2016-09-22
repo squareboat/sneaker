@@ -1,8 +1,9 @@
 {
     "name": "squareboat/sneaker",
-    "description": "An easy way to send emails whenever an error occurs on server.",
+    "description": "An easy way to send emails whenever an exception occurs on server for Laravel Applications.",
     "type": "library",
     "license": "MIT",
+    "keywords": ["laravel", "exceptions", "email"],
     "authors": [
         {
             "name": "Amit Gupta",
@@ -11,7 +12,12 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "~5.0"
+        "illuminate/support": "~5.0",
+        "illuminate/view": "~5.0",
+        "illuminate/config": "~5.0",
+        "illuminate/mail": "~5.0",
+        "symfony/debug": "2.8.*|3.0.*",
+        "tijsverkoyen/css-to-inline-styles": "^2.2"
     },
     "autoload": {
         "psr-4": {
