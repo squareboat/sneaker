@@ -3,6 +3,7 @@
 namespace Squareboat\Sneaker;
 
 use Exception;
+use Illuminate\Log\Writer;
 use Illuminate\View\Factory;
 use Illuminate\Config\Repository;
 use Symfony\Component\Debug\Exception\FlattenException;
@@ -32,6 +33,13 @@ class Sneaker
     private $mailer;
 
     /**
+     * The log writer implementation.
+     *
+     * @var \Illuminate\Log\Writer
+     */
+    private $logger;
+
+    /**
      * Create a new sneaker instance.
      *
      * @param  \Illuminate\Config\Repository $config
@@ -39,13 +47,15 @@ class Sneaker
      * @param  \Squareboat\Sneaker\CssInlineMailer $mailer
      * @return void
      */
-    function __construct(Repository $config, Factory $view, CssInlineMailer $mailer)
+    function __construct(Repository $config, Factory $view, CssInlineMailer $mailer, Writer $logger)
     {
         $this->config = $config;
 
         $this->view = $view;
 
         $this->mailer = $mailer;
+
+        $this->logger = $logger;
     }
 
     /**
@@ -56,16 +66,20 @@ class Sneaker
      */
     public function captureException(Exception $exception)
     {
-        if($this->isSilent()) {
-            return;
-        }
+        try {
+            if($this->isSilent()) {
+                return;
+            }
 
-        if($this->isExceptionFromBot()) {
-            return;
-        }
+            if($this->isExceptionFromBot()) {
+                return;
+            }
 
-        if($this->shouldCapture($exception)) {
-            $this->capture($exception);
+            if($this->shouldCapture($exception)) {
+                $this->capture($exception);
+            }
+        } catch (Exception $e) {
+            $this->logger->error($e);
         }
     }
 
