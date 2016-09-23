@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 
-Copyright © [SquareBoat](https://squareboat.com) 2016
+Copyright © 2016 [SquareBoat](https://squareboat.com)
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal

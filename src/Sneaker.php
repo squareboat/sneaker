@@ -1,6 +1,6 @@
 <?php
 
-namespace Squareboat\Sneaker;
+namespace SquareBoat\Sneaker;
 
 use Exception;
 use Illuminate\Log\Writer;
@@ -28,7 +28,7 @@ class Sneaker
     /**
      * The css inline mailer implementation.
      *
-     * @var \Squareboat\Sneaker\CssInlineMailer
+     * @var \SquareBoat\Sneaker\CssInlineMailer
      */
     private $mailer;
 
@@ -44,7 +44,7 @@ class Sneaker
      *
      * @param  \Illuminate\Config\Repository $config
      * @param  \Illuminate\View\Factory $view
-     * @param  \Squareboat\Sneaker\CssInlineMailer $mailer
+     * @param  \SquareBoat\Sneaker\CssInlineMailer $mailer
      * @return void
      */
     function __construct(Repository $config, Factory $view, CssInlineMailer $mailer, Writer $logger)

@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Squareboat\\Sneaker\\": "src/"
+            "SquareBoat\\Sneaker\\": "src/"
         }
     },
     "minimum-stability": "dev"

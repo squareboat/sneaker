@@ -1,6 +1,6 @@
 <?php
 
-namespace Squareboat\Sneaker;
+namespace SquareBoat\Sneaker;
 
 use Illuminate\Support\ServiceProvider;
 

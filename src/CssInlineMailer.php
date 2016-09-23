@@ -1,6 +1,6 @@
 <?php
 
-namespace Squareboat\Sneaker;
+namespace SquareBoat\Sneaker;
 
 use Illuminate\Mail\Mailer;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
