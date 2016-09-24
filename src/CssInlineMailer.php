@@ -46,7 +46,7 @@ class CssInlineMailer
     {
         $content = $this->convertCssToInlineStyles($content);
 
-        $this->mailer->send('sneaker::raw', compact('content'), $callback);
+        $this->mailer->queue('sneaker::raw', compact('content'), $callback);
     }
 
     /**

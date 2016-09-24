@@ -4,10 +4,7 @@ namespace SquareBoat\Sneaker;
 
 use Exception;
 use Illuminate\Log\Writer;
-use Illuminate\View\Factory;
 use Illuminate\Config\Repository;
-use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
 
 class Sneaker
 {
@@ -19,11 +16,11 @@ class Sneaker
     private $config;
 
     /**
-     * The view factory implementation.
-     * 
-     * @var \Illuminate\View\Factory
+     * The exception handler implementation.
+     *
+     * @var \SquareBoat\Sneaker\ExceptionHandler
      */
-    protected $view;
+    private $handler;
 
     /**
      * The css inline mailer implementation.
@@ -43,15 +40,19 @@ class Sneaker
      * Create a new sneaker instance.
      *
      * @param  \Illuminate\Config\Repository $config
-     * @param  \Illuminate\View\Factory $view
+     * @param  \SquareBoat\Sneaker\ExceptionHandler $handler
      * @param  \SquareBoat\Sneaker\CssInlineMailer $mailer
+     * @param  \Illuminate\Log\Writer $logger
      * @return void
      */
-    function __construct(Repository $config, Factory $view, CssInlineMailer $mailer, Writer $logger)
+    public function __construct(Repository $config,
+                                ExceptionHandler $handler,
+                                CssInlineMailer $mailer,
+                                Writer $logger)
     {
         $this->config = $config;
 
-        $this->view = $view;
+        $this->handler = $handler;
 
         $this->mailer = $mailer;
 
@@ -65,7 +66,7 @@ class Sneaker
      * @return void
      */
     public function captureException(Exception $exception)
-    {
+    {        
         try {
             if($this->isSilent()) {
                 return;
@@ -79,6 +80,8 @@ class Sneaker
                 $this->capture($exception);
             }
         } catch (Exception $e) {
+            $this->logger->error(sprintf('Exception thrown in Sneaker when capturing an exception (%s: %s)', get_class($e), $e->getMessage()));
+
             $this->logger->error($e);
         }
     }
@@ -93,9 +96,9 @@ class Sneaker
     {
         $recipients = $this->config->get('sneaker.to');
 
-        $subject = $this->view->make('sneaker::email.subject', compact('exception'));
+        $subject = $this->handler->convertExceptionToString($exception);
 
-        $body = $this->convertExceptionToHtml($exception);
+        $body = $this->handler->convertExceptionToHtml($exception);
 
         $this->mailer->send($body, function($message) use($recipients, $subject){
             $message->to($recipients)->subject($subject);
@@ -138,9 +141,10 @@ class Sneaker
      */
     private function isExceptionFromBot()
     {
-        $ignored_bots = $this->config->get("sneaker.ignored_bots", []);
+        $ignored_bots = $this->config->get('sneaker.ignored_bots');
 
-        $agent = array_key_exists('HTTP_USER_AGENT', $_SERVER) ? strtolower($_SERVER['HTTP_USER_AGENT']) : null;
+        $agent = array_key_exists('HTTP_USER_AGENT', $_SERVER)
+                    ? strtolower($_SERVER['HTTP_USER_AGENT']) : null;
 
         foreach ($ignored_bots as $bot) {
             if (($agent && strpos($agent, $bot) !== false)) {
@@ -149,32 +153,5 @@ class Sneaker
         }
 
         return false;
-    }
-
-    /**
-     * Create a html for the given exception.
-     *
-     * @param  \Exception  $exception
-     * @return string
-     */
-    private function convertExceptionToHtml($exception)
-    {
-        $flattened = FlattenException::create($exception);
-
-        $handler = new SymfonyExceptionHandler();
-
-        return $this->decorate($handler->getContent($flattened), $handler->getStylesheet($flattened), $exception);
-    }
-
-    /**
-     * Get the html response content.
-     *
-     * @param  string  $content
-     * @param  string  $css
-     * @return string
-     */
-    private function decorate($content, $css, $exception)
-    {
-        return $this->view->make('sneaker::email.body', compact('content', 'css', 'exception'))->render();
     }
 }
