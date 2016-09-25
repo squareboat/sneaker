@@ -1,6 +1,6 @@
 # Laravel Exception Notifications
 
-An easy way to send emails whenever an exception occurs on server for Laravel Applications.
+An easy way to send emails whenever an exception occurs on the server for Laravel Applications.
 
 ![sneaker example image](sneaker.png?raw=true "Sneaker")
 
@@ -72,7 +72,7 @@ For sending emails when an exception occurs set `SNEAKER_SILENT=false` in your `
 
 It contains the list of the exception types that should be captured. You can add your exceptions here for which you want to send error emails.
 
-By default package has included `Symfony\Component\Debug\Exception\FatalErrorException::class`.
+By default, the package has included `Symfony\Component\Debug\Exception\FatalErrorException::class`.
 
 ```php
 'capture' => [
@@ -80,7 +80,7 @@ By default package has included `Symfony\Component\Debug\Exception\FatalErrorExc
 ],
 ```
 
-You can also use '*' in the `capture` array which will in turn captures every exception and in `App/Exceptions/Handler.php` you can use following code:
+You can also use `'*'` in the `$capture` array which will in turn captures every exception. To use this feature you should add the following code in `App/Exceptions/Handler.php`:
 
 ```php
 public function report(Exception $e)
@@ -115,6 +115,20 @@ This is the list of bots for which we should NOT send error emails.
     'ia_archiver',      // Alexa
 ],
 ```
+
+## Customize
+
+If you need to customize the subject and body of email, run following command:
+
+```bash
+$ php artisan vendor:publish --provider="SquareBoat\Sneaker\SneakerServiceProvider"
+```
+
+> Note - Don't run this command again if you have run it already.
+
+Now the email's subject and body view are located in the `resources/views/vendor/sneaker` directory.
+
+We have passed the thrown exception object `$exception` in the view which you can use to customize the view to fit your needs.
 
 # License
 
