@@ -19,6 +19,9 @@ return [
     |
     | For which exception class emails should be sent?
     |
+    | You can also use '*' in the array which will in turn captures every
+    | exception.
+    |
     */
     'capture' => [
         Symfony\Component\Debug\Exception\FatalErrorException::class,

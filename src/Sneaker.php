@@ -68,19 +68,22 @@ class Sneaker
     public function captureException(Exception $exception)
     {        
         try {
-            if($this->isSilent()) {
+            if ($this->isSilent()) {
                 return;
             }
 
-            if($this->isExceptionFromBot()) {
+            if ($this->isExceptionFromBot()) {
                 return;
             }
 
-            if($this->shouldCapture($exception)) {
+            if ($this->shouldCapture($exception)) {
                 $this->capture($exception);
             }
         } catch (Exception $e) {
-            $this->logger->error(sprintf('Exception thrown in Sneaker when capturing an exception (%s: %s)', get_class($e), $e->getMessage()));
+            $this->logger->error(sprintf(
+                'Exception thrown in Sneaker when capturing an exception (%s: %s)',
+                get_class($e), $e->getMessage()
+            ));
 
             $this->logger->error($e);
         }
@@ -100,7 +103,7 @@ class Sneaker
 
         $body = $this->handler->convertExceptionToHtml($exception);
 
-        $this->mailer->send($body, function($message) use($recipients, $subject){
+        $this->mailer->send($body, function($message) use($recipients, $subject) {
             $message->to($recipients)->subject($subject);
         });
     }
@@ -125,6 +128,14 @@ class Sneaker
     {
         $capture = $this->config->get('sneaker.capture');
 
+        if (! is_array($capture)) {
+            return false;
+        }
+
+        if (in_array('*', $capture)) {
+            return true;
+        }
+
         foreach ($capture as $type) {
             if ($exception instanceof $type) {
                 return true;
@@ -144,10 +155,15 @@ class Sneaker
         $ignored_bots = $this->config->get('sneaker.ignored_bots');
 
         $agent = array_key_exists('HTTP_USER_AGENT', $_SERVER)
-                    ? strtolower($_SERVER['HTTP_USER_AGENT']) : null;
+                    ? strtolower($_SERVER['HTTP_USER_AGENT'])
+                    : null;
+
+        if (is_null($agent)) {
+            return false;
+        }
 
         foreach ($ignored_bots as $bot) {
-            if (($agent && strpos($agent, $bot) !== false)) {
+            if ((strpos($agent, $bot) !== false)) {
                 return true;
             }
         }

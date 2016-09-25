@@ -2,6 +2,8 @@
 
 An easy way to send emails whenever an exception occurs on server for Laravel Applications.
 
+![sneaker example image](sneaker.png?raw=true "Sneaker")
+
 ## Install
 
 ### Install via composer
@@ -76,6 +78,19 @@ By default package has included `Symfony\Component\Debug\Exception\FatalErrorExc
 'capture' => [
     Symfony\Component\Debug\Exception\FatalErrorException::class,
 ],
+```
+
+You can also use '*' in the `capture` array which will in turn captures every exception and in `App/Exceptions/Handler.php` you can use following code:
+
+```php
+public function report(Exception $e)
+{
+    if($this->shouldReport()) {
+        app('sneaker')->captureException($e);
+    }
+
+    parent::report($e);
+}
 ```
 
 #### to
