@@ -9,17 +9,7 @@ An easy way to send emails whenever an exception occurs on the server for Larave
 ### Install via composer
 
 ```
-$ composer require squareboat/sneaker dev-master
-```
-
-or
-
-Add dependency to your `composer.json` file and run composer update.
-
-```
-require: {
-    "squareboat/sneaker": "dev-master"
-}
+$ composer require squareboat/sneaker
 ```
 
 ### Configure Laravel
