@@ -83,7 +83,7 @@ To use this feature you should add the following code in `App/Exceptions/Handler
 ```php
 public function report(Exception $e)
 {
-    if($this->shouldReport()) {
+    if ($this->shouldReport($e)) {
         app('sneaker')->captureException($e);
     }
 
