@@ -1,6 +1,6 @@
 # Laravel Exception Notifications
 
-An easy way to send emails whenever an exception occurs on the server for Laravel Applications.
+An easy way to send emails with stack trace whenever an exception occurs on the server for Laravel Applications.
 
 ![sneaker example image](sneaker.png?raw=true "Sneaker")
 
