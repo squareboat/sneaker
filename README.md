@@ -70,7 +70,15 @@ By default, the package has included `Symfony\Component\Debug\Exception\FatalErr
 ],
 ```
 
-You can also use `'*'` in the `$capture` array which will in turn captures every exception. To use this feature you should add the following code in `App/Exceptions/Handler.php`:
+You can also use `'*'` in the `$capture` array which will in turn captures every exception.
+
+```php
+'capture' => [
+    '*'
+],
+```
+
+To use this feature you should add the following code in `App/Exceptions/Handler.php`:
 
 ```php
 public function report(Exception $e)
