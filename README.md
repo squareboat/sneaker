@@ -24,7 +24,7 @@ SquareBoat\Sneaker\SneakerServiceProvider::class,
 
 ### Add Sneaker's Exception Capturing
 
-Add exception capturing to `App/Exceptions/Handler.php`:
+Add exception capturing to `app/Exceptions/Handler.php`:
 
 ```php
 public function report(Exception $e)
@@ -78,7 +78,7 @@ You can also use `'*'` in the `$capture` array which will in turn captures every
 ],
 ```
 
-To use this feature you should add the following code in `App/Exceptions/Handler.php`:
+To use this feature you should add the following code in `app/Exceptions/Handler.php`:
 
 ```php
 public function report(Exception $e)

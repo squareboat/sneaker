@@ -12,14 +12,14 @@ class CssInlineMailer
      * 
      * @var \Illuminate\Mail\Mailer
      */
-    protected $mailer;
+    private $mailer;
 
     /**
      * The css to inline styles instance.
      * 
      * @var \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles
      */
-    protected $converter;
+    private $converter;
 
     /**
      * Create a new css inline mailer instance.
@@ -55,7 +55,7 @@ class CssInlineMailer
      * @param string $content
      * @return string
      */
-    protected function convertCssToInlineStyles($content)
+    private function convertCssToInlineStyles($content)
     {
         return $this->converter->convert($content);
     }
