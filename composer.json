@@ -18,7 +18,7 @@
         "illuminate/mail": "~5.0",
         "illuminate/log": "~5.0",
         "symfony/debug": "2.8.*|3.0.*",
-        "tijsverkoyen/css-to-inline-styles": "^2.2"
+        "tijsverkoyen/css-to-inline-styles": "~1.5"
     },
     "autoload": {
         "psr-4": {

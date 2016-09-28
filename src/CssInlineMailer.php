@@ -57,6 +57,10 @@ class CssInlineMailer
      */
     private function convertCssToInlineStyles($content)
     {
-        return $this->converter->convert($content);
+        $this->converter->setHTML($content);
+
+        $this->converter->setUseInlineStylesBlock(true);
+
+        return $this->converter->convert();
     }
 }
