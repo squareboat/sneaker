@@ -17,7 +17,7 @@
         "illuminate/config": "~5.0",
         "illuminate/mail": "~5.0",
         "illuminate/log": "~5.0",
-        "symfony/debug": "2.8.*|3.0.*",
+        "symfony/debug": "~2.8|~3.0",
         "tijsverkoyen/css-to-inline-styles": "^2.2"
     },
     "autoload": {
@@ -25,5 +25,5 @@
             "SquareBoat\\Sneaker\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev-master"
 }
