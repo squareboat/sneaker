@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Sends email on Exceptions or be silent
+    | Sends an email on Exception or be silent
     |--------------------------------------------------------------------------
     |
     | Should we email error traces?

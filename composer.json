@@ -25,5 +25,5 @@
             "SquareBoat\\Sneaker\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }

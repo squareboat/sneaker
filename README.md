@@ -27,11 +27,11 @@ SquareBoat\Sneaker\SneakerServiceProvider::class,
 Add exception capturing to `app/Exceptions/Handler.php`:
 
 ```php
-public function report(Exception $e)
+public function report(Exception $exception)
 {
-    app('sneaker')->captureException($e);
+    app('sneaker')->captureException($exception);
 
-    parent::report($e);
+    parent::report($exception);
 }
 ```
 
@@ -81,13 +81,13 @@ You can also use `'*'` in the `$capture` array which will in turn captures every
 To use this feature you should add the following code in `app/Exceptions/Handler.php`:
 
 ```php
-public function report(Exception $e)
+public function report(Exception $exception)
 {
-    if ($this->shouldReport($e)) {
-        app('sneaker')->captureException($e);
+    if ($this->shouldReport($exception)) {
+        app('sneaker')->captureException($exception);
     }
 
-    parent::report($e);
+    parent::report($exception);
 }
 ```
 
