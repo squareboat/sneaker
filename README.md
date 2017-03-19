@@ -128,6 +128,19 @@ Now the email's subject and body view are located in the `resources/views/vendor
 
 We have passed the thrown exception object `$exception` in the view which you can use to customize the view to fit your needs.
 
+## Security
+
+If you discover any security related issues, please email amit.gupta@squareboat.com instead of using the issue tracker.
+
+## Credits
+
+- [Amit Gupta](https://github.com/akaamitgupta)
+- [All Contributors](../../contributors)
+
+## About Squareboat
+
+Squareboat is a startup focused, product development company based in Gurgaon, India. You'll find an overview of all our open source projects [on GitHub](https://github.com/squareboat).
+
 # License
 
 The MIT License. Please see [License File](LICENSE.md) for more information. Copyright © 2016 [SquareBoat](https://squareboat.com)
