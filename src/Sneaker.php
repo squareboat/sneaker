@@ -4,6 +4,7 @@ namespace SquareBoat\Sneaker;
 
 use Exception;
 use Illuminate\Log\Writer;
+use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Config\Repository;
 
 class Sneaker
@@ -23,9 +24,9 @@ class Sneaker
     private $handler;
 
     /**
-     * The css inline mailer implementation.
-     *
-     * @var \SquareBoat\Sneaker\CssInlineMailer
+     * The mailer instance.
+     * 
+     * @var \Illuminate\Contracts\Mail\Mailer
      */
     private $mailer;
 
@@ -41,13 +42,13 @@ class Sneaker
      *
      * @param  \Illuminate\Config\Repository $config
      * @param  \SquareBoat\Sneaker\ExceptionHandler $handler
-     * @param  \SquareBoat\Sneaker\CssInlineMailer $mailer
+     * @param  \Illuminate\Contracts\Mail\Mailer $mailer
      * @param  \Illuminate\Log\Writer $logger
      * @return void
      */
     public function __construct(Repository $config,
                                 ExceptionHandler $handler,
-                                CssInlineMailer $mailer,
+                                Mailer $mailer,
                                 Writer $logger)
     {
         $this->config = $config;
@@ -66,7 +67,7 @@ class Sneaker
      * @return void
      */
     public function captureException(Exception $exception)
-    {        
+    {
         try {
             if ($this->isSilent()) {
                 return;
@@ -103,9 +104,7 @@ class Sneaker
 
         $body = $this->handler->convertExceptionToHtml($exception);
 
-        $this->mailer->send($body, function($message) use($recipients, $subject) {
-            $message->to($recipients)->subject($subject);
-        });
+        $this->mailer->to($recipients)->send(new ExceptionMailer($subject, $body));
     }
 
     /**
