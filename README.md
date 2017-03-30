@@ -8,6 +8,8 @@ An easy way to send emails with stack trace whenever an exception occurs on the 
 
 ### Install via composer
 
+#### For Laravel <= 5.2, please use the [v1 branch](https://github.com/squareboat/sneaker/tree/v1)!
+
 ```
 $ composer require squareboat/sneaker
 ```
