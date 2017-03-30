@@ -6,7 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class ExceptionMailer extends Mailable implements ShouldQueue
 {
@@ -46,19 +45,6 @@ class ExceptionMailer extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->view('sneaker::raw')
-                    ->with('content', $this->convertCssToInlineStyles($this->body));
-    }
-
-    /**
-     * Inlines the css into the given html.
-     * 
-     * @param string $content
-     * @return string
-     */
-    private function convertCssToInlineStyles($content)
-    {
-        $converter = new CssToInlineStyles();
-
-        return $converter->convert($content);
+                    ->with('content', $this->body);
     }
 }
