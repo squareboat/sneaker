@@ -66,7 +66,7 @@ class Sneaker
      * @param  \Exception $exception
      * @return void
      */
-    public function captureException(Exception $exception)
+    public function captureException(Exception $exception, $sneaking = false)
     {
         try {
             if ($this->isSilent()) {
@@ -87,6 +87,10 @@ class Sneaker
             ));
 
             $this->logger->error($e);
+
+            if ($sneaking) {
+                throw $e;
+            }
         }
     }
 

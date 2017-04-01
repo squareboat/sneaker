@@ -29,6 +29,12 @@ class SneakerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/sneaker.php' => config_path('sneaker.php'),
         ], 'config');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \SquareBoat\Sneaker\Commands\Sneak::class,
+            ]);
+        }
     }
 
     /**
