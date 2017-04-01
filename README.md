@@ -9,7 +9,7 @@ An easy way to send emails with stack trace whenever an exception occurs on the 
 ### Install via composer
 
 ```
-$ composer require squareboat/sneaker
+$ composer require squareboat/sneaker ^1.0
 ```
 
 ### Configure Laravel
