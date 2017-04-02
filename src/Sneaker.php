@@ -4,8 +4,8 @@ namespace SquareBoat\Sneaker;
 
 use Exception;
 use Illuminate\Log\Writer;
-use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Config\Repository;
+use Illuminate\Contracts\Mail\Mailer;
 
 class Sneaker
 {
@@ -64,6 +64,7 @@ class Sneaker
      * Checks an exception which should be tracked and captures it if applicable.
      *
      * @param  \Exception $exception
+     * @param  bool $sneaking
      * @return void
      */
     public function captureException(Exception $exception, $sneaking = false)
