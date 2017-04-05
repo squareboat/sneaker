@@ -139,9 +139,9 @@ If you discover any security related issues, please email amit.gupta@squareboat.
 - [Amit Gupta](https://github.com/akaamitgupta)
 - [All Contributors](../../contributors)
 
-## About Squareboat
+## About SquareBoat
 
-Squareboat is a startup focused, product development company based in Gurgaon, India. You'll find an overview of all our open source projects [on GitHub](https://github.com/squareboat).
+[SquareBoat](https://squareboat.com) is a startup focused, product development company based in Gurgaon, India. You'll find an overview of all our open source projects [on GitHub](https://github.com/squareboat).
 
 # License
 
