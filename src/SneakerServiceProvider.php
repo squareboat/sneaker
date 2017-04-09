@@ -11,20 +11,16 @@ class SneakerServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = false;
+    protected $defer = true;
 
     /**
-     * Bootstrap the application services.
+     * Bootstrap the sneaker's services.
      *
      * @return void
      */
     public function boot()
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'sneaker');
-
-        $this->publishes([
-            __DIR__ . '/../resources/views/email' => resource_path('views/vendor/sneaker/email')
-        ], 'views');
 
         $this->publishes([
             __DIR__.'/../config/sneaker.php' => config_path('sneaker.php'),
@@ -38,7 +34,7 @@ class SneakerServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
+     * Register the sneaker's services.
      *
      * @return void
      */
@@ -51,5 +47,15 @@ class SneakerServiceProvider extends ServiceProvider
         $this->app->singleton('sneaker', function () {
             return $this->app->make(Sneaker::class);
         });
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['sneaker'];
     }
 }

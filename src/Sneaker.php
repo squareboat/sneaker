@@ -3,59 +3,37 @@
 namespace SquareBoat\Sneaker;
 
 use Exception;
-use Illuminate\Log\Writer;
-use Illuminate\Config\Repository;
-use Illuminate\Contracts\Mail\Mailer;
+use Illuminate\Contracts\Logging\Log;
+use Illuminate\Contracts\Config\Repository;
+use SquareBoat\Sneaker\Notifications\ExceptionCaught;
+use SquareBoat\Sneaker\Exceptions\Handler as ExceptionHandler;
 
 class Sneaker
 {
     /**
      * The config implementation.
      *
-     * @var \Illuminate\Config\Repository
+     * @var \Illuminate\Contracts\Config\Repository
      */
     private $config;
 
     /**
-     * The exception handler implementation.
-     *
-     * @var \SquareBoat\Sneaker\ExceptionHandler
-     */
-    private $handler;
-
-    /**
-     * The mailer instance.
-     * 
-     * @var \Illuminate\Contracts\Mail\Mailer
-     */
-    private $mailer;
-
-    /**
      * The log writer implementation.
      *
-     * @var \Illuminate\Log\Writer
+     * @var \Illuminate\Contracts\Logging\Log
      */
     private $logger;
 
     /**
      * Create a new sneaker instance.
      *
-     * @param  \Illuminate\Config\Repository $config
-     * @param  \SquareBoat\Sneaker\ExceptionHandler $handler
-     * @param  \Illuminate\Contracts\Mail\Mailer $mailer
-     * @param  \Illuminate\Log\Writer $logger
+     * @param  \Illuminate\Contracts\Config\Repository $config
+     * @param  \Illuminate\Contracts\Logging\Log $logger
      * @return void
      */
-    public function __construct(Repository $config,
-                                ExceptionHandler $handler,
-                                Mailer $mailer,
-                                Writer $logger)
+    public function __construct(Repository $config, Log $logger)
     {
         $this->config = $config;
-
-        $this->handler = $handler;
-
-        $this->mailer = $mailer;
 
         $this->logger = $logger;
     }
@@ -82,34 +60,12 @@ class Sneaker
                 $this->capture($exception);
             }
         } catch (Exception $e) {
-            $this->logger->error(sprintf(
-                'Exception thrown in Sneaker when capturing an exception (%s: %s)',
-                get_class($e), $e->getMessage()
-            ));
-
-            $this->logger->error($e);
+            $this->logSneakerException($e);
 
             if ($sneaking) {
                 throw $e;
             }
         }
-    }
-
-    /**
-     * Capture an exception.
-     * 
-     * @param  \Exception $exception
-     * @return void
-     */
-    private function capture($exception)
-    {
-        $recipients = $this->config->get('sneaker.to');
-
-        $subject = $this->handler->convertExceptionToString($exception);
-
-        $body = $this->handler->convertExceptionToHtml($exception);
-
-        $this->mailer->to($recipients)->send(new ExceptionMailer($subject, $body));
     }
 
     /**
@@ -128,7 +84,7 @@ class Sneaker
      * @param  Exception $exception
      * @return boolean
      */
-    private function shouldCapture(Exception $exception)
+    private function shouldCapture($exception)
     {
         $capture = $this->config->get('sneaker.capture');
 
@@ -173,5 +129,68 @@ class Sneaker
         }
 
         return false;
+    }
+
+    /**
+     * Capture an exception.
+     * 
+     * @param  \Exception $exception
+     * @return void
+     */
+    private function capture($exception)
+    {
+        $report = $this->getReport($exception);
+
+        $notifiable = $this->getNotifiable();
+
+        $notifiable->notify(
+            new ExceptionCaught($report, $this->config->get('sneaker.notifications'))
+        );
+    }
+
+    /**
+     * Get the report of exception.
+     * 
+     * @param  \Exception $exception
+     * @return \SquareBoat\Sneaker\Report
+     */
+    private function getReport($exception)
+    {
+        $handler = new ExceptionHandler($exception);
+
+        return (new Report)
+                ->setEnv($this->config->get('app.env'))
+                ->setName($handler->getExceptionName())
+                ->setHtml($handler->convertExceptionToHtml())
+                ->setMessage($handler->convertExceptionToMessage())
+                ->setStacktrace($handler->convertExceptionToStacktrace());
+    }
+
+    /**
+     * Get the notifiable.
+     * 
+     * @return \SquareBoat\Sneaker\Notifiable
+     */
+    private function getNotifiable()
+    {
+        return new Notifiable([
+            'emails' => $this->config->get('sneaker.mail.to'),
+            'slack_webhook_url' => $this->config->get('sneaker.slack.webhook_url')
+        ]);
+    }
+
+    /**
+     * Logs the exception thrown by Sneaker itself.
+     * 
+     * @param \Exception $exception
+     */
+    private function logSneakerException(Exception $exception)
+    {
+        $this->logger->error(sprintf(
+            'Exception thrown in Sneaker when capturing an exception (%s: %s)',
+            get_class($exception), $exception->getMessage()
+        ));
+
+        $this->logger->error($exception);
     }
 }

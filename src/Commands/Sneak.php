@@ -54,7 +54,7 @@ class Sneak extends Command
         $this->overrideConfig();
 
         try {
-            app('sneaker')->captureException(new DummyException, true);
+            $this->laravel->make('sneaker')->captureException(new DummyException, true);
 
             $this->info('Sneaker is working fine ✅');
         } catch (Exception $e) {

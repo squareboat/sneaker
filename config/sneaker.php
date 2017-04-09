@@ -10,7 +10,7 @@ return [
     | Should we email error traces?
     |
     */
-    'silent' => env('SNEAKER_SILENT', true),
+    'silent' => env('SNEAKER_SILENT', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,15 +29,44 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Error email recipients
+    | Notification Delivery Channels
     |--------------------------------------------------------------------------
     |
-    | Email stack traces to these addresses.
+    | The channels on which the notification will be delivered.
     |
     */
 
-    'to' => [
-        // 'hello@example.com',
+    'notifications' => [
+        'mail',
+        'slack',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Error email recipients
+    |--------------------------------------------------------------------------
+    |
+    | The email address used to deliver the notification.
+    |
+    */
+
+    'mail' => [
+        'to' => [
+            // 'your@email.com',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Slack Webhook Url
+    |--------------------------------------------------------------------------
+    |
+    | The webhook URL to which the notification should be delivered.
+    |
+    */
+
+    'slack' => [
+        'webhook_url' => env('SNEAKER_SLACK_WEBHOOK_URL'),
     ],
 
     /*
