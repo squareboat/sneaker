@@ -130,6 +130,16 @@ Now the email's subject and body view are located in the `resources/views/vendor
 
 We have passed the thrown exception object `$exception` in the view which you can use to customize the view to fit your needs.
 
+## Sneak
+### Test your integration
+To verify that sneaker is configured correctly and our integration is working, use `sneaker:sneak` Artisan command:
+
+```bash
+$ php artisan sneaker:sneak
+```
+
+A `SquareBoat\Sneaker\Exceptions\DummyException` class will be thrown and captured by sneaker. The captured exception will appear in your configured email immediately.
+
 ## Security
 
 If you discover any security related issues, please email amit.gupta@squareboat.com instead of using the issue tracker.
