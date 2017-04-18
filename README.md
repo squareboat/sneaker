@@ -1,12 +1,12 @@
 # Laravel Exception Notifications
 
-An easy way to send emails with stack trace whenever an exception occurs on the server for Laravel Applications.
+An easy way to send emails with stack trace whenever an exception occurs on the server for Laravel applications.
 
 ![sneaker example image](sneaker.png?raw=true "Sneaker")
 
 ## Install
 
-### Install via composer
+### Install via Composer
 
 #### For Laravel <= 5.2, please use the [v1 branch](https://github.com/squareboat/sneaker/tree/v1)!
 
@@ -22,7 +22,6 @@ Once installation operation is complete, simply add the service provider to your
 ```
 SquareBoat\Sneaker\SneakerServiceProvider::class,
 ```
-
 
 ### Add Sneaker's Exception Capturing
 
@@ -47,7 +46,7 @@ $ php artisan vendor:publish --provider="SquareBoat\Sneaker\SneakerServiceProvid
 
 The config file will be published in  `config/sneaker.php`
 
-Following are the configuration attributes used for the sneaker.
+Following are the configuration attributes used for the Sneaker.
 
 #### silent
 
@@ -99,8 +98,8 @@ This is the list of recipients of error emails.
 
 ```php
 'to' => [
-        // 'hello@example.com',
-    ],
+    // 'hello@example.com',
+],
 ```
 
 #### ignored_bots
@@ -132,13 +131,13 @@ We have passed the thrown exception object `$exception` in the view which you ca
 
 ## Sneak
 ### Test your integration
-To verify that sneaker is configured correctly and our integration is working, use `sneaker:sneak` Artisan command:
+To verify that Sneaker is configured correctly and our integration is working, use `sneaker:sneak` Artisan command:
 
 ```bash
 $ php artisan sneaker:sneak
 ```
 
-A `SquareBoat\Sneaker\Exceptions\DummyException` class will be thrown and captured by sneaker. The captured exception will appear in your configured email immediately.
+A `SquareBoat\Sneaker\Exceptions\DummyException` class will be thrown and captured by Sneaker. The captured exception will appear in your configured email immediately.
 
 ## Security
 
