@@ -49,6 +49,13 @@ class Report
     protected $html;
 
     /**
+     * The associated request.
+     *
+     * @var string
+     */
+    protected $request;
+
+    /**
      * Create a new report instance.
      *
      * @return void
@@ -201,5 +208,28 @@ class Report
     public function getHtmlStylesheet()
     {
         return $this->html['stylesheet'];
+    }
+
+    /**
+     * Set the associated request.
+     *
+     * @param  string  $request
+     * @return $this
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+    /**
+     * Get the associated request.
+     *
+     * @return  array
+     */
+    public function getRequest()
+    {
+        return $this->request;
     }
 }

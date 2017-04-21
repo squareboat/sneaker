@@ -18,6 +18,13 @@ class Sneaker
     private $config;
 
     /**
+     * The request implementation.
+     *
+     * @var \SquareBoat\Sneaker\Request
+     */
+    private $request;
+
+    /**
      * The log writer implementation.
      *
      * @var \Illuminate\Contracts\Logging\Log
@@ -28,12 +35,15 @@ class Sneaker
      * Create a new sneaker instance.
      *
      * @param  \Illuminate\Contracts\Config\Repository $config
+     * @param  \SquareBoat\Sneaker\Request $request
      * @param  \Illuminate\Contracts\Logging\Log $logger
      * @return void
      */
-    public function __construct(Repository $config, Log $logger)
+    public function __construct(Repository $config, Request $request, Log $logger)
     {
         $this->config = $config;
+
+        $this->request = $request;
 
         $this->logger = $logger;
     }
@@ -160,6 +170,7 @@ class Sneaker
 
         return (new Report)
                 ->setEnv($this->config->get('app.env'))
+                ->setRequest($this->request->getMetaData())
                 ->setName($handler->getExceptionName())
                 ->setHtml($handler->convertExceptionToHtml())
                 ->setMessage($handler->convertExceptionToMessage())

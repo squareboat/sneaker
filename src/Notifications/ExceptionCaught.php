@@ -79,8 +79,16 @@ class ExceptionCaught extends Notification
                     ->content($this->getSubject())
                     ->attachment(function ($attachment) {
                         $attachment->title($this->report->getMessage())
-                                   ->content("```\n" . $this->report->getStacktrace() . "\n```")
-                                   ->markdown(['title', 'text'])
+                                   ->content((string) Markdown::block()->code($this->report->getStacktrace()))
+                                   ->markdown(['title', 'text']);
+                    })
+                    ->attachment(function ($attachment) {
+                        $attachment->title('Request')
+                                   ->fields(array_map(function($item) {
+                                            return (string) Markdown::block()->code($item);
+                                        }, array_filter($this->report->getRequest()))
+                                    )
+                                   ->markdown(['fields'])
                                    ->timestamp($this->report->getTime())
                                    ->footer('Sneaker');
                     });
