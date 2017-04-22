@@ -83,6 +83,26 @@ class ExceptionCaught extends Notification
                                    ->markdown(['title', 'text']);
                     })
                     ->attachment(function ($attachment) {
+                        if($user = $this->report->getUser()) {
+                            $attachment->title('User')
+                                       ->fields(array_map(function($item) {
+                                                return (string) Markdown::block()->code($item);
+                                            }, array_filter($user))
+                                        )
+                                       ->markdown(['fields']);
+                        }
+                    })
+                    ->attachment(function ($attachment) {
+                        if($extra = $this->report->getExtra()) {
+                            $attachment->title('Extra Data')
+                                       ->fields(array_map(function($item) {
+                                                return (string) Markdown::block()->code($item);
+                                            }, array_filter($extra))
+                                        )
+                                       ->markdown(['fields']);
+                        }
+                    })
+                    ->attachment(function ($attachment) {
                         $attachment->title('Request')
                                    ->fields(array_map(function($item) {
                                             return (string) Markdown::block()->code($item);

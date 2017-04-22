@@ -3,6 +3,7 @@
 namespace SquareBoat\Sneaker;
 
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Contracts\Config\Repository;
 use SquareBoat\Sneaker\Notifications\ExceptionCaught;
@@ -30,6 +31,13 @@ class Sneaker
      * @var \Illuminate\Contracts\Logging\Log
      */
     private $logger;
+
+    /**
+     * The meta data to be added in sneaker notifications.
+     *
+     * @var array
+     */
+    private $metaData = [];
 
     /**
      * Create a new sneaker instance.
@@ -171,6 +179,8 @@ class Sneaker
         return (new Report)
                 ->setEnv($this->config->get('app.env'))
                 ->setRequest($this->request->getMetaData())
+                ->setUser(Arr::get($this->metaData, 'user'))
+                ->setExtra(Arr::get($this->metaData, 'extra'))
                 ->setName($handler->getExceptionName())
                 ->setHtml($handler->convertExceptionToHtml())
                 ->setMessage($handler->convertExceptionToMessage())
@@ -203,5 +213,27 @@ class Sneaker
         ));
 
         $this->logger->error($exception);
+    }
+
+    /**
+     * Execute the user context callback.
+     * 
+     * @param  callable  $callback
+     * @return void
+     */
+    public function userContext($callback)
+    {
+        $this->metaData['user'] = call_user_func($callback);
+    }
+
+    /**
+     * Execute the extra context callback.
+     * 
+     * @param  callable  $callback
+     * @return void
+     */
+    public function extraContext($callback)
+    {
+        $this->metaData['extra'] = call_user_func($callback);
     }
 }

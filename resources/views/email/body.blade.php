@@ -61,6 +61,9 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
+            .tags .key {
+                font-family:inherit;
+            }
             .tags .value {
                 color: #4674ca;
                 background: #fbfbfc;
@@ -79,6 +82,38 @@
     </head>
     <body>
         {!! $report->getHtmlContent() !!}
+
+        @if($report->getUser())
+            <div class="extra-info" style="padding: 0;">
+                <div class="padding title">User</div>
+                <div class="padding">
+                    <div class="tags">
+                        @foreach (array_filter($report->getUser()) as $key => $item)
+                            <li>
+                                <span class="key">{{ $key }}</span>
+                                <span class="value">{{ $item }}</span>
+                            </li>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        @if($report->getExtra())
+            <div class="extra-info" style="padding: 0;">
+                <div class="padding title">Extra Data</div>
+                <div class="padding">
+                    <div class="tags">
+                        @foreach (array_filter($report->getExtra()) as $key => $item)
+                            <li>
+                                <span class="key">{{ $key }}</span>
+                                <span class="value">{{ $item }}</span>
+                            </li>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <div class="extra-info" style="padding: 0;">
             <div class="padding title">Request</div>

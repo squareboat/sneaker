@@ -51,9 +51,23 @@ class Report
     /**
      * The associated request.
      *
-     * @var string
+     * @var array
      */
     protected $request;
+
+    /**
+     * The associated user.
+     *
+     * @var array
+     */
+    protected $user;
+
+    /**
+     * The associated extra data.
+     *
+     * @var array
+     */
+    protected $extra;
 
     /**
      * Create a new report instance.
@@ -231,5 +245,51 @@ class Report
     public function getRequest()
     {
         return $this->request;
+    }
+
+    /**
+     * Set the associated user.
+     *
+     * @param  string  $user
+     * @return $this
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get the associated user.
+     *
+     * @return  array
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set the associated extra data.
+     *
+     * @param  string  $extra
+     * @return $this
+     */
+    public function setExtra($extra)
+    {
+        $this->extra = $extra;
+
+        return $this;
+    }
+
+    /**
+     * Get the associated extra data.
+     *
+     * @return  array
+     */
+    public function getExtra()
+    {
+        return $this->extra;
     }
 }
