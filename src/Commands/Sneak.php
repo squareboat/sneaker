@@ -67,8 +67,8 @@ class Sneak extends Command
         try {
             $this->sneaker->userContext(function() {
                 return [
-                    'id' => 10,
-                    'name' => 'John Doe'
+                    'ID' => 10,
+                    'Name' => 'John Doe'
                 ];
             })
             ->extraContext(function() {

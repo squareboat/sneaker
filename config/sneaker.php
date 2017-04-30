@@ -14,17 +14,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | A list of the exception types that should be captured.
+    | A list of exception types that should be captured.
     |--------------------------------------------------------------------------
     |
-    | For which exception class notification should be sent?
+    | For which exception type notification should be sent?
     |
-    | You can also use '*' in the array which will in turn captures every
-    | exception.
+    | By defautl we have set the array to '*', which means that we will capture 
+    | all the exceptions that occurs in the application. To explicitly list 
+    | the class define them below as:
+    |
+    | 'capture' => [
+    |     Symfony\Component\Debug\Exception\FatalErrorException::class,
+    | ],
     |
     */
     'capture' => [
-        Symfony\Component\Debug\Exception\FatalErrorException::class,
+        '*'
     ],
 
     /*
