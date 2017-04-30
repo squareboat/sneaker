@@ -88,7 +88,7 @@
                 <div class="padding title">User</div>
                 <div class="padding">
                     <div class="tags">
-                        @foreach (array_filter($report->getUser()) as $key => $item)
+                        @foreach ($report->getUser() as $key => $item)
                             <li>
                                 <span class="key">{{ $key }}</span>
                                 <span class="value">{{ $item }}</span>
@@ -104,7 +104,7 @@
                 <div class="padding title">Extra Data</div>
                 <div class="padding">
                     <div class="tags">
-                        @foreach (array_filter($report->getExtra()) as $key => $item)
+                        @foreach ($report->getExtra() as $key => $item)
                             <li>
                                 <span class="key">{{ $key }}</span>
                                 <span class="value">{{ $item }}</span>
@@ -119,7 +119,7 @@
             <div class="padding title">Request</div>
             <div class="padding">
                 <div class="tags">
-                    @foreach (array_filter($report->getRequest()) as $key => $item)
+                    @foreach ($report->getRequest() as $key => $item)
                         <li>
                             <span class="key">{{ $key }}</span>
                             <span class="value">{{ $item }}</span>

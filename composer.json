@@ -25,7 +25,10 @@
     "autoload": {
         "psr-4": {
             "SquareBoat\\Sneaker\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "minimum-stability": "dev"
 }

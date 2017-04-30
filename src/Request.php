@@ -58,6 +58,6 @@ class Request
             $data['Accept-Language'] = Arr::get($headers, 'accept-language.0');
         }
 
-        return $data;
+        return array_filter($data);
     }
 }

@@ -4,6 +4,7 @@ namespace SquareBoat\Sneaker;
 
 use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Contracts\Config\Repository;
 use SquareBoat\Sneaker\Notifications\ExceptionCaught;
@@ -219,21 +220,41 @@ class Sneaker
      * Execute the user context callback.
      * 
      * @param  callable  $callback
-     * @return void
+     * @return $this
      */
     public function userContext($callback)
     {
-        $this->metaData['user'] = call_user_func($callback);
+        $this->metaData['user'] = $this->sanitize(call_user_func($callback));
+
+        return $this;
     }
 
     /**
      * Execute the extra context callback.
      * 
      * @param  callable  $callback
-     * @return void
+     * @return $this
      */
     public function extraContext($callback)
     {
-        $this->metaData['extra'] = call_user_func($callback);
+        $this->metaData['extra'] = $this->sanitize(call_user_func($callback));
+
+        return $this;
+    }
+
+    /**
+     * [sanitize description]
+     * @param  [type] $items [description]
+     * @return [type]        [description]
+     */
+    private function sanitize($items)
+    {
+        $items = $items instanceof Collection ? $items->all() : $items;
+
+        if (! is_array($items)) {
+            return [];
+        }
+
+        return array_flat($items);
     }
 }

@@ -3,6 +3,7 @@
 namespace SquareBoat\Sneaker\Commands;
 
 use Exception;
+use SquareBoat\Sneaker\Sneaker;
 use Illuminate\Console\Command;
 use Illuminate\Config\Repository;
 use SquareBoat\Sneaker\Exceptions\DummyException;
@@ -32,16 +33,26 @@ class Sneak extends Command
     private $config;
 
     /**
+     * The sneaker implementation.
+     *
+     * @var \SquareBoat\Sneaker\Sneaker
+     */
+    private $sneaker;
+
+    /**
      * Create a sneak command instance.
      *
      * @param  \Illuminate\Config\Repository $config
+     * @param  \SquareBoat\Sneaker\Sneaker $sneaker
      * @return void
      */
-    public function __construct(Repository $config)
+    public function __construct(Repository $config, Sneaker $sneaker)
     {
         parent::__construct();
 
         $this->config = $config;
+
+        $this->sneaker = $sneaker;
     }
 
     /**
@@ -54,11 +65,23 @@ class Sneak extends Command
         $this->overrideConfig();
 
         try {
-            $this->laravel->make('sneaker')->captureException(new DummyException, true);
+            $this->sneaker->userContext(function() {
+                return [
+                    'id' => 10,
+                    'name' => 'John Doe'
+                ];
+            })
+            ->extraContext(function() {
+                return [
+                    'App' => 'Project X',
+                    'Version' => 'v3.0.0'
+                ];
+            })
+            ->captureException(new DummyException, true);
 
             $this->info('Sneaker is working fine ✅');
-        } catch (Exception $e) {
-            (new ConsoleApplication)->renderException($e, $this->output);
+        } catch (Exception $exception) {
+            (new ConsoleApplication)->renderException($exception, $this->output);
         }
     }
 

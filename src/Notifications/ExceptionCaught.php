@@ -85,29 +85,20 @@ class ExceptionCaught extends Notification
                     ->attachment(function ($attachment) {
                         if($user = $this->report->getUser()) {
                             $attachment->title('User')
-                                       ->fields(array_map(function($item) {
-                                                return (string) Markdown::block()->code($item);
-                                            }, array_filter($user))
-                                        )
+                                       ->fields($this->getPayload($user))
                                        ->markdown(['fields']);
                         }
                     })
                     ->attachment(function ($attachment) {
                         if($extra = $this->report->getExtra()) {
                             $attachment->title('Extra Data')
-                                       ->fields(array_map(function($item) {
-                                                return (string) Markdown::block()->code($item);
-                                            }, array_filter($extra))
-                                        )
+                                       ->fields($this->getPayload($extra))
                                        ->markdown(['fields']);
                         }
                     })
                     ->attachment(function ($attachment) {
                         $attachment->title('Request')
-                                   ->fields(array_map(function($item) {
-                                            return (string) Markdown::block()->code($item);
-                                        }, array_filter($this->report->getRequest()))
-                                    )
+                                   ->fields($this->getPayload($this->report->getRequest()))
                                    ->markdown(['fields'])
                                    ->timestamp($this->report->getTime())
                                    ->footer('Sneaker');
@@ -126,5 +117,18 @@ class ExceptionCaught extends Notification
             request()->server('SERVER_NAME'),
             $this->report->getEnv()
         );        
+    }
+
+    /**
+     * Add markdoen to given payload.
+     * 
+     * @param  array $items
+     * @return array
+     */
+    private function getPayload($items)
+    {
+        return array_map(function($item) {
+            return (string) Markdown::block()->code($item);
+        }, $items);
     }
 }
