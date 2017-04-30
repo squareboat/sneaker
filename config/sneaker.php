@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Sends an email on Exception or be silent
+    | Sends a notification on Exception or be silent.
     |--------------------------------------------------------------------------
     |
     | Should we email error traces?
@@ -17,7 +17,7 @@ return [
     | A list of the exception types that should be captured.
     |--------------------------------------------------------------------------
     |
-    | For which exception class emails should be sent?
+    | For which exception class notification should be sent?
     |
     | You can also use '*' in the array which will in turn captures every
     | exception.
@@ -74,7 +74,7 @@ return [
     | Ignore Crawler Bots
     |--------------------------------------------------------------------------
     |
-    | For which bots should we NOT send error emails?
+    | For which bots should we NOT send error notifications?
     |
     */
     'ignored_bots' => [
