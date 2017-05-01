@@ -15,7 +15,7 @@ $ composer require squareboat/sneaker
 ```
 
 ### Configure Laravel
-Once installation operation is complete, simply add both the service provider and facade classes to your project's `config/app.php file:
+Once installation operation is complete, simply add both the service provider and facade classes to your project's `config/app.php` file:
 
 #### Service Provider
 
