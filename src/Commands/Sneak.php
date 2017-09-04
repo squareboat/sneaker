@@ -65,7 +65,8 @@ class Sneak extends Command
         $this->overrideConfig();
 
         try {
-            $this->sneaker->userContext(function() {
+            $this->sneaker
+            ->userContext(function() {
                 return [
                     'ID' => 10,
                     'Name' => 'John Doe'
