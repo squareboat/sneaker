@@ -12,11 +12,13 @@
             .extra-info {
                 background-color: #FFFFFF;
                 padding: 15px 28px;
+                margin: 0 auto;
                 margin-bottom: 20px;
                 -webkit-border-radius: 10px;
                 -moz-border-radius: 10px;
                 border-radius: 10px;
                 border: 1px solid #ccc;
+                width: 970px;
             }
 
             .padding {
@@ -129,8 +131,10 @@
             </div>
         </div>
 
-        <div class="extra-info">
-            &#128336; &nbsp;{{ $report->getTime()->format('l, jS \of F Y h:i:s a') }} {{ $report->getTime()->tzName }}
+        <div class="extra-info"  style="padding: 0;">
+            <div class="padding title" style="border-bottom: none;">
+                &#128336; &nbsp;{{ $report->getTime()->format('l, jS \of F Y h:i:s a') }} {{ $report->getTime()->tzName }}
+            </div>
         </div>
     </body>
 </html>
