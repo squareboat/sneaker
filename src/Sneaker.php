@@ -3,7 +3,7 @@
 namespace SquareBoat\Sneaker;
 
 use Exception;
-use Illuminate\Log\Writer;
+use Psr\Log\LoggerInterface;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Config\Repository;
 
@@ -33,7 +33,7 @@ class Sneaker
     /**
      * The log writer implementation.
      *
-     * @var \Illuminate\Log\Writer
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
 
@@ -43,13 +43,13 @@ class Sneaker
      * @param  \Illuminate\Config\Repository $config
      * @param  \SquareBoat\Sneaker\ExceptionHandler $handler
      * @param  \Illuminate\Contracts\Mail\Mailer $mailer
-     * @param  \Illuminate\Log\Writer $logger
+     * @param  \Psr\Log\LoggerInterface $logger
      * @return void
      */
     public function __construct(Repository $config,
                                 ExceptionHandler $handler,
                                 Mailer $mailer,
-                                Writer $logger)
+                                LoggerInterface $logger)
     {
         $this->config = $config;
 
