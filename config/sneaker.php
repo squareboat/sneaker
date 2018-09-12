@@ -49,6 +49,7 @@ return [
     |
     */
     'ignored_bots' => [
+        'yandexbot',        // YandexBot
         'googlebot',        // Googlebot
         'bingbot',          // Microsoft Bingbot
         'slurp',            // Yahoo! Slurp
