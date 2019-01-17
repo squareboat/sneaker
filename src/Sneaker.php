@@ -102,13 +102,15 @@ class Sneaker
      */
     private function capture($exception)
     {
+        $from = $this->config->get('sneaker.from');
+
         $recipients = $this->config->get('sneaker.to');
 
         $subject = $this->handler->convertExceptionToString($exception);
 
         $body = $this->handler->convertExceptionToHtml($exception);
 
-        $this->mailer->to($recipients)->send(new ExceptionMailer($subject, $body));
+        $this->mailer->to($recipients)->send(new ExceptionMailer($subject, $body, $from));
     }
 
     /**

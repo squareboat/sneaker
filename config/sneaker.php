@@ -29,6 +29,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Error email sender
+    |--------------------------------------------------------------------------
+    |
+    | Here, you may specify address for all emails that are sent by your
+    | application.
+    | Or leave NULL to apply a global value.
+    |
+    */
+
+    //'from' => 'hello@example.com',
+    'from' => null,
+
+    /*
+    |--------------------------------------------------------------------------
     | Error email recipients
     |--------------------------------------------------------------------------
     |
