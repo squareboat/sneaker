@@ -3,9 +3,10 @@
 namespace SquareBoat\Sneaker;
 
 use Exception;
-use Psr\Log\LoggerInterface;
-use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Config\Repository;
+use Illuminate\Contracts\Mail\Mailer;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
+use Psr\Log\LoggerInterface;
 
 class Sneaker
 {
@@ -155,7 +156,7 @@ class Sneaker
      */
     private function isExceptionFromBot()
     {
-        $ignored_bots = $this->config->get('sneaker.ignored_bots');
+        $ignored_bots = (array) $this->config->get('sneaker.ignored_bots');
 
         $agent = array_key_exists('HTTP_USER_AGENT', $_SERVER)
                     ? strtolower($_SERVER['HTTP_USER_AGENT'])
@@ -163,6 +164,12 @@ class Sneaker
 
         if (is_null($agent)) {
             return false;
+        }
+
+        if (in_array('*', $ignored_bots)) {
+            $detect = new CrawlerDetect;
+
+            return $detect->isCrawler($agent);
         }
 
         foreach ($ignored_bots as $bot) {

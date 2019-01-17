@@ -47,7 +47,10 @@ return [
     |
     | For which bots should we NOT send error emails?
     |
+    | To prohibit sending messages from all bots, specify `[*]`.
+    |
     */
+    //'ignored_bots' => ['*'],
     'ignored_bots' => [
         'yandexbot',        // YandexBot
         'googlebot',        // Googlebot
