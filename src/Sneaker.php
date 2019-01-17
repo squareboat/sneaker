@@ -64,7 +64,9 @@ class Sneaker
      * Checks an exception which should be tracked and captures it if applicable.
      *
      * @param  \Exception $exception
+     * @param  bool $sneaking
      * @return void
+     * @throws \Exception
      */
     public function captureException(Exception $exception, $sneaking = false)
     {
