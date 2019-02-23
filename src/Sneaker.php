@@ -113,7 +113,7 @@ class Sneaker
         if ($shouldQueue) {
             $this->mailer->to($recipients)->queue($mail);
         } else {
-            $this->mailer->to($recipients)->send(new ExceptionMailer($subject, $body));
+            $this->mailer->to($recipients)->send($mail);
         }
     }
 
