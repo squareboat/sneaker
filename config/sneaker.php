@@ -11,6 +11,16 @@ return [
     |
     */
     'silent' => env('SNEAKER_SILENT', true),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Determine if we should queue the emails
+    |--------------------------------------------------------------------------
+    |
+    | Should we queue email error traces?
+    |
+    */
+    'should_queue' => env('SNEAKER_SHOULD_QUEUE', true),
 
     /*
     |--------------------------------------------------------------------------
