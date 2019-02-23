@@ -60,6 +60,15 @@ The package comes with `'silent' => true,` configuration by default, since you p
 
 For sending emails when an exception occurs set `SNEAKER_SILENT=false` in your `.env` file.
 
+#### should_queue
+
+By default we send error mails via laravel queue. Set this to `false` if you want disable this behavior
+
+```php
+'should_queue' => env('SNEAKER_SHOULD_QUEUE', true),
+```
+
+or set `SNEAKER_SHOULD_QUEUE=false` in your `.env` file.
 
 #### capture
 
