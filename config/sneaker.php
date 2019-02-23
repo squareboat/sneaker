@@ -17,7 +17,7 @@ return [
     | Determine if we should queue the emails
     |--------------------------------------------------------------------------
     |
-    | Should we queue email error traces?
+    | Should we queue error traces?
     |
     */
     'should_queue' => env('SNEAKER_SHOULD_QUEUE', true),
