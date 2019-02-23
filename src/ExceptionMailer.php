@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ExceptionMailer extends Mailable implements ShouldQueue
+class ExceptionMailer extends Mailable
 {
     use Queueable, SerializesModels;
 
