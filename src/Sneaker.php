@@ -102,13 +102,19 @@ class Sneaker
      */
     private function capture($exception)
     {
+        $shouldQueue = $this->config->get('sneaker.should_queue');
         $recipients = $this->config->get('sneaker.to');
 
         $subject = $this->handler->convertExceptionToString($exception);
 
         $body = $this->handler->convertExceptionToHtml($exception);
 
-        $this->mailer->to($recipients)->send(new ExceptionMailer($subject, $body));
+        $mail = new ExceptionMailer($subject, $body);
+        if ($shouldQueue) {
+            $this->mailer->to($recipients)->queue($mail);
+        } else {
+            $this->mailer->to($recipients)->send(new ExceptionMailer($subject, $body));
+        }
     }
 
     /**
