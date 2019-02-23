@@ -5,7 +5,6 @@ namespace SquareBoat\Sneaker;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ExceptionMailer extends Mailable
 {
