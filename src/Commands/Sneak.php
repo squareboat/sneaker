@@ -69,10 +69,6 @@ class Sneak extends Command
      */
     public function overrideConfig()
     {
-        $this->config->set('sneaker.silent', false);
-
-        $this->config->set('queue.default', 'sync');
-
         $this->config->set('sneaker.capture', [DummyException::class]);
     }
 }
