@@ -1,13 +1,12 @@
 <?php
 
-namespace SquareBoat\Sneaker;
+namespace SquareBoat\Sneaker\Mailables;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ExceptionMailer extends Mailable implements ShouldQueue
+abstract class ExceptionMailer extends Mailable
 {
     use Queueable, SerializesModels;
 
