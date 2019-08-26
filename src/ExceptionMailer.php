@@ -30,7 +30,7 @@ class ExceptionMailer extends Mailable implements ShouldQueue
      *
      * @var string
      */
-    public $from;
+    public $customFrom;
 
     /**
      * Create a new message instance.
@@ -43,7 +43,7 @@ class ExceptionMailer extends Mailable implements ShouldQueue
 
         $this->body = $body;
 
-        $this->from = $from;
+        $this->customFrom = $from;
     }
 
     /**
@@ -53,8 +53,8 @@ class ExceptionMailer extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        if($this->from) {
-            $this->from($this->from);
+        if($this->customFrom) {
+            $this->from($this->customFrom);
         }
 
         return $this->view('sneaker::raw')
