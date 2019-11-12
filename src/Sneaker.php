@@ -6,6 +6,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Config\Repository;
+use Illuminate\Support\Facades\Storage;
 
 class Sneaker
 {
@@ -131,6 +132,10 @@ class Sneaker
     {
         $capture = $this->config->get('sneaker.capture');
 
+        if ($this->isDuplicatedException($exception)) {
+            return false;
+        }
+
         if (! is_array($capture)) {
             return false;
         }
@@ -146,6 +151,57 @@ class Sneaker
         }
 
         return false;
+    }
+
+    /**
+     * Determine if the exception is duplicated.
+     * 
+     * @param  Exception $exception
+     * @return boolean
+     */
+    private function isDuplicatedException(Exception $exception)
+    {
+        $exceptionHash = hash('ripemd160', $exception->getMessage() . $exception->getFile() . $exception->getLine());
+        
+        return in_array($exceptionHash, $this->getDuplicatesLog()) ?: $this->setInDuplicatesLog($exceptionHash);
+    }
+
+    /**
+     * Get duplicates log file
+     * 
+     * @return string path to file
+     */
+    private function getDuplicatesLogFile()
+    {
+        $filename = sprintf('logs/%s.json', date('d.m.Y'));
+
+        if (! Storage::exists($filename)) {
+            Storage::put($filename, json_encode([]));
+        }
+
+        return $filename;
+    }
+
+    /**
+     * Return known errors
+     * 
+     * @return array
+     */
+    private function getDuplicatesLog()
+    {
+        return json_decode(Storage::get($this->getDuplicatesLogFile()));
+    }
+
+    /**
+     * Save Exception in duplicates log
+     * 
+     * @return void
+     */
+    private function setInDuplicatesLog(string $exceptionHash)
+    {
+        $content = $this->getDuplicatesLog();
+        $content[] = $exceptionHash;
+        Storage::put($this->getDuplicatesLogFile(), json_encode($content));
     }
 
     /**
