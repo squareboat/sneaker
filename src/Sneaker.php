@@ -161,6 +161,10 @@ class Sneaker
      */
     private function isDuplicatedException(Exception $exception)
     {
+        if ($this->config->get('sneaker.ignore_duplicates') === false) {
+            return false;
+        }
+
         $exceptionHash = hash('ripemd160', $exception->getMessage() . $exception->getFile() . $exception->getLine());
         
         return in_array($exceptionHash, $this->getDuplicatesLog()) ?: $this->setInDuplicatesLog($exceptionHash);

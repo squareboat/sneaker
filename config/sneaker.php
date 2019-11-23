@@ -55,4 +55,14 @@ return [
         'slurp',            // Yahoo! Slurp
         'ia_archiver',      // Alexa
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ignore duplicate exceptions
+    |--------------------------------------------------------------------------
+    |
+    | Should we ignore duplicate exceptions?
+    |
+    */
+    'ignore_duplicates' => env('SNEAKER_IGNORE_DUPLICATES', true),
 ];
