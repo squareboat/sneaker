@@ -143,7 +143,7 @@ A `SquareBoat\Sneaker\Exceptions\DummyException` class will be thrown and captur
 
 ## Security
 
-If you discover any security related issues, please email amit.gupta@squareboat.com instead of using the issue tracker.
+If you discover any security related issues, please email akaamitgupta@gmail.com instead of using the issue tracker.
 
 ## Credits
 
