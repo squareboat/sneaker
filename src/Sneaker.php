@@ -2,7 +2,6 @@
 
 namespace SquareBoat\Sneaker;
 
-use Exception;
 use Psr\Log\LoggerInterface;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Config\Repository;
@@ -63,10 +62,10 @@ class Sneaker
     /**
      * Checks an exception which should be tracked and captures it if applicable.
      *
-     * @param  \Exception $exception
+     * @param  \Throwable|\Exception $exception
      * @return void
      */
-    public function captureException(Exception $exception, $sneaking = false)
+    public function captureException($exception, $sneaking = false)
     {
         try {
             if ($this->isSilent()) {
@@ -97,7 +96,7 @@ class Sneaker
     /**
      * Capture an exception.
      * 
-     * @param  \Exception $exception
+     * @param  \Exception|\Throwable $exception
      * @return void
      */
     private function capture($exception)
@@ -124,10 +123,10 @@ class Sneaker
     /**
      * Determine if the exception is in the "capture" list.
      * 
-     * @param  Exception $exception
+     * @param  \Throwable|\Exception $exception
      * @return boolean
      */
-    private function shouldCapture(Exception $exception)
+    private function shouldCapture($exception)
     {
         $capture = $this->config->get('sneaker.capture');
 
