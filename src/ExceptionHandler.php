@@ -61,7 +61,7 @@ class ExceptionHandler
     private function getFlattenedException($exception)
     {
         if (!$exception instanceof FlattenException) {
-            $exception = FlattenException::create($exception);
+            $exception = FlattenException::createFromThrowable($exception);
         }
 
         return $exception;
