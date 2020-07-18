@@ -157,4 +157,4 @@ If you discover any security related issues, please email akaamitgupta@gmail.com
 
 # License
 
-The MIT License. Please see [License File](LICENSE.md) for more information. Copyright © 2016 [SquareBoat](https://squareboat.com)
+The MIT License. Please see [License File](LICENSE.md) for more information. Copyright © 2020 [SquareBoat](https://squareboat.com)
