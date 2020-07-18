@@ -9,9 +9,10 @@ An easy way to send emails with stack trace whenever an exception occurs on the 
 ### Install via Composer
 
 #### For Laravel <= 5.2, please use the [v1 branch](https://github.com/squareboat/sneaker/tree/v1)!
+#### For Laravel 7.x, please use the [latest branch](https://github.com/squareboat/sneaker)!
 
 ```
-$ composer require squareboat/sneaker
+$ composer require squareboat/sneaker ^5.0
 ```
 
 ### Configure Laravel
@@ -156,4 +157,4 @@ If you discover any security related issues, please email akaamitgupta@gmail.com
 
 # License
 
-The MIT License. Please see [License File](LICENSE.md) for more information. Copyright © 2016 [SquareBoat](https://squareboat.com)
+The MIT License. Please see [License File](LICENSE.md) for more information. Copyright © 2020 [SquareBoat](https://squareboat.com)
