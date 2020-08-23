@@ -105,6 +105,8 @@ This is the list of recipients of error emails.
 ],
 ```
 
+You could also specify a comma delimited string via `SNEAKER_TO=hello@example.com,hello1@example.com` in the `.env` file.
+
 #### ignored_bots
 
 This is the list of bots for which we should NOT send error emails.

@@ -36,9 +36,12 @@ return [
     |
     */
 
-    'to' => [
-        // 'hello@example.com',
-    ],
+    // 'to' => [
+    //     'hello@example.com',
+    // ],
+    'to' => explode(",", env("SNEAKER_TO", "")),
+    // set SNEAKER_TO=hello@example.com
+    // or SNEAKER_TO=hello@example.com,hello1@example.com
 
     /*
     |--------------------------------------------------------------------------
