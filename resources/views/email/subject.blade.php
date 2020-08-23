@@ -1,1 +1,1 @@
-[Sneaker] | {{ get_class($exception) }} | Server - {{ request()->server('SERVER_NAME') }} | Environment - {{ config('app.env') }}
+[Sneaker/{{ request()->server('SERVER_NAME') }}/{{ config('app.env') }}] {{ get_class($exception) }}
