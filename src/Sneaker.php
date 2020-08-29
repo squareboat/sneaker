@@ -101,13 +101,43 @@ class Sneaker
      */
     private function capture($exception)
     {
+        $queue = $this->config->get('sneaker.queue');
+
         $recipients = $this->config->get('sneaker.to');
 
         $subject = $this->handler->convertExceptionToString($exception);
 
         $body = $this->handler->convertExceptionToHtml($exception);
 
-        $this->mailer->to($recipients)->send(new ExceptionMailer($subject, $body));
+        $mail = $this->createMailable($subject, $body, $queue);
+
+        if ($queue['use']) {
+            $this->mailer->to($recipients)->queue($mail);
+        } else {
+            $this->mailer->to($recipients)->send($mail);
+        }
+    }
+
+    /**
+     * Create the mailable class. Either as queueable or ordinary.
+     * 
+     * @param string $subject
+     * @param string $body
+     * @param array $queue 
+     * 
+     * @return Illuminate\Mail\Mailable $mail
+     */
+    private function createMailable($subject, $body, $queue)
+    {
+        if ($queue['use']) {
+            $mail = (new Mailables\QueueableExceptionMailer($subject, $body))
+                ->onConnection($queue['conn'])
+                ->onQueue($queue['name']);
+        } else {
+            $mail = new Mailables\ExceptionMailer($subject, $body);
+        }
+
+        return $mail;
     }
 
     /**
