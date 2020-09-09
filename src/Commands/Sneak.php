@@ -58,7 +58,7 @@ class Sneak extends Command
 
             $this->info('Sneaker is working fine ✅');
         } catch (Exception $e) {
-            (new ConsoleApplication)->renderException($e, $this->output);
+            (new ConsoleApplication)->renderThrowable($e, $this->output);
         }
     }
 
