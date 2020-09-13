@@ -48,7 +48,7 @@ class ErrorHandler
     {
         $flat = $this->getFlattenedException($exception);
 
-        $renderer = new HtmlErrorRenderer();
+        $renderer = new HtmlErrorRenderer(true);
 
         return $this->decorate($renderer->getBody($flat), $renderer->getStylesheet($flat), $flat);
 
