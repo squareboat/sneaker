@@ -3,10 +3,13 @@
 namespace SquareBoat\Sneaker;
 
 use Illuminate\View\Factory;
-use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Debug;
+use Symfony\Component\ErrorHandler\ErrorHandler as SymfonyErrorHandler;
+use Symfony\Component\ErrorHandler\DebugClassLoader;
 
-class ExceptionHandler
+
+class ErrorHandler
 {
     /**
      * The view factory implementation.
@@ -47,16 +50,16 @@ class ExceptionHandler
     {
         $flat = $this->getFlattenedException($exception);
 
-        $handler = new SymfonyExceptionHandler();
+        $handler = new SymfonyErrorHandler();
 
         return $this->decorate($handler->getContent($flat), $handler->getStylesheet($flat), $flat);
     }
 
     /**
      * Converts the Exception in a PHP Exception to be able to serialize it.
-     * 
-     * @param  \Exception $exception
-     * @return \Symfony\Component\Debug\Exception\FlattenException
+     *
+     * @param $exception
+     * @return FlattenException
      */
     private function getFlattenedException($exception)
     {

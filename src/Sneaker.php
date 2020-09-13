@@ -5,6 +5,7 @@ namespace SquareBoat\Sneaker;
 use Psr\Log\LoggerInterface;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Config\Repository;
+use Throwable;
 
 class Sneaker
 {
@@ -18,7 +19,7 @@ class Sneaker
     /**
      * The exception handler implementation.
      *
-     * @var \SquareBoat\Sneaker\ExceptionHandler
+     * @var \SquareBoat\Sneaker\ErrorHandler
      */
     private $handler;
 
@@ -40,13 +41,13 @@ class Sneaker
      * Create a new sneaker instance.
      *
      * @param  \Illuminate\Config\Repository $config
-     * @param  \SquareBoat\Sneaker\ExceptionHandler $handler
+     * @param  \SquareBoat\Sneaker\ErrorHandler $handler
      * @param  \Illuminate\Contracts\Mail\Mailer $mailer
      * @param  \Psr\Log\LoggerInterface $logger
      * @return void
      */
     public function __construct(Repository $config,
-                                ExceptionHandler $handler,
+                                ErrorHandler $handler,
                                 Mailer $mailer,
                                 LoggerInterface $logger)
     {
@@ -62,7 +63,7 @@ class Sneaker
     /**
      * Checks an exception which should be tracked and captures it if applicable.
      *
-     * @param  \Throwable|\Exception $exception
+     * @param  Throwable|\Exception $exception
      * @return void
      */
     public function captureException($exception, $sneaking = false)
@@ -79,7 +80,7 @@ class Sneaker
             if ($this->shouldCapture($exception)) {
                 $this->capture($exception);
             }
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $this->logger->error(sprintf(
                 'Exception thrown in Sneaker when capturing an exception (%s: %s)',
                 get_class($e), $e->getMessage()
@@ -96,7 +97,7 @@ class Sneaker
     /**
      * Capture an exception.
      * 
-     * @param  \Exception|\Throwable $exception
+     * @param  \Exception|Throwable $exception
      * @return void
      */
     private function capture($exception)
@@ -107,7 +108,7 @@ class Sneaker
 
         $body = $this->handler->convertExceptionToHtml($exception);
 
-        $this->mailer->to($recipients)->send(new ExceptionMailer($subject, $body));
+        $this->mailer->to($recipients)->send(new ErrorMailer($subject, $body));
     }
 
     /**
@@ -117,13 +118,13 @@ class Sneaker
      */
     private function isSilent()
     {
-        return $this->config->get('sneaker.silent');
+        return $this->config->get('sneaker.silent', false);
     }
 
     /**
      * Determine if the exception is in the "capture" list.
      * 
-     * @param  \Throwable|\Exception $exception
+     * @param  Throwable|\Exception $exception
      * @return boolean
      */
     private function shouldCapture($exception)
