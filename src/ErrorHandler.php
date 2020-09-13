@@ -3,10 +3,8 @@
 namespace SquareBoat\Sneaker;
 
 use Illuminate\View\Factory;
+use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
-use Symfony\Component\ErrorHandler\Debug;
-use Symfony\Component\ErrorHandler\ErrorHandler as SymfonyErrorHandler;
-use Symfony\Component\ErrorHandler\DebugClassLoader;
 
 
 class ErrorHandler
@@ -50,9 +48,10 @@ class ErrorHandler
     {
         $flat = $this->getFlattenedException($exception);
 
-        $handler = new SymfonyErrorHandler();
+        $renderer = new HtmlErrorRenderer();
 
-        return $this->decorate($handler->getContent($flat), $handler->getStylesheet($flat), $flat);
+        return $this->decorate($renderer->getBody($flat), $renderer->getStylesheet($flat), $flat);
+
     }
 
     /**
