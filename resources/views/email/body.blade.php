@@ -29,5 +29,8 @@
         <div class="extra-info">
             &#128336; &nbsp;{{ date('l, jS \of F Y h:i:s a') }} {{ date_default_timezone_get() }}
         </div>
+        <div class="extra-info">
+            User - {{ optional(request()->user())->email ?? 'Guest' }}
+        </div>
     </body>
 </html>
