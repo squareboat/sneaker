@@ -8,24 +8,11 @@ An easy way to send emails with stack trace whenever an exception occurs on the 
 
 ### Install via Composer
 
-#### For Laravel up to 5.2, please use the [v1 branch](https://github.com/squareboat/sneaker/tree/v1)!
-#### For Laravel 5.3 to 6.x, please use the [v5 branch](https://github.com/squareboat/sneaker/tree/v5)!
 #### For Laravel 7.x, please use the [v7 branch](https://github.com/squareboat/sneaker/tree/v7)!
 #### For Laravel 8.x and up, please use the [main branch](https://github.com/squareboat/sneaker)!
 
 ```
 $ composer require squareboat/sneaker
-```
-
-### Configure Laravel
-
-> If you are using __laravel 5.5__ or higher you should skip this step.
-
-If you are using laravel 5.3 or 5.4, simply add the service provider to your project's `config/app.php` file:
-
-#### Service Provider
-```
-SquareBoat\Sneaker\SneakerServiceProvider::class,
 ```
 
 ### Add Sneaker's Exception Capturing
