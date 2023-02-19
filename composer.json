@@ -12,14 +12,14 @@
     ],
     "require": {
         "php": ">=7.3",
-        "illuminate/support": "8.*|9.*|10.*",
-        "illuminate/view": "8.*|9.*|10.*",
-        "illuminate/config": "8.*|9.*|10.*",
-        "illuminate/mail": "8.*|9.*|10.*",
-        "illuminate/log": "8.*|9.*|10.*",
-        "illuminate/queue": "8.*|9.*|10.*",
-        "illuminate/console": "8.*|9.*|10.*",
-        "symfony/error-handler": "~5.1|~6.*"
+        "illuminate/support": "^8.0 | ^9.0 | ^10.0",
+        "illuminate/view": "^8.0 | ^9.0 | ^10.0",
+        "illuminate/config": "^8.0 | ^9.0 | ^10.0",
+        "illuminate/mail": "^8.0 | ^9.0 | ^10.0",
+        "illuminate/log": "^8.0 | ^9.0 | ^10.0",
+        "illuminate/queue": "^8.0 | ^9.0 | ^10.0",
+        "illuminate/console": "^8.0 | ^9.0 | ^10.0",
+        "symfony/error-handler": "~5.1 | ^6.0 | ^6.1 | ^6.2 | ^6.3"
     },
     "require-dev": {
     },
