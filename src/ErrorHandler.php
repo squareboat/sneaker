@@ -11,10 +11,10 @@ class ErrorHandler
 {
     /**
      * The view factory implementation.
-     * 
+     *
      * @var \Illuminate\View\Factory
      */
-    private $view;
+    private Factory $view;
 
     /**
      * Create a new exception handler instance.
@@ -29,11 +29,11 @@ class ErrorHandler
 
     /**
      * Create a string for the given exception.
-     * 
+     *
      * @param  \Exception $exception
      * @return string
      */
-    public function convertExceptionToString($exception)
+    public function convertExceptionToString($exception): string
     {
         return $this->view->make('sneaker::email.subject', compact('exception'))->render();
     }
@@ -41,10 +41,10 @@ class ErrorHandler
     /**
      * Create a html for the given exception.
      *
-     * @param  \Exception $exception
+     * @param  \Exception  $exception
      * @return string
      */
-    public function convertExceptionToHtml($exception)
+    public function convertExceptionToHtml(\Throwable $exception): string
     {
         $flat = $this->getFlattenedException($exception);
 
@@ -60,7 +60,7 @@ class ErrorHandler
      * @param $exception
      * @return FlattenException
      */
-    private function getFlattenedException($exception)
+    private function getFlattenedException($exception): FlattenException
     {
         if (!$exception instanceof FlattenException) {
             $exception = FlattenException::createFromThrowable($exception);
@@ -72,11 +72,11 @@ class ErrorHandler
     /**
      * Get the html response content.
      *
-     * @param  string $content
-     * @param  string $css
+     * @param  string  $content
+     * @param  string  $css
      * @return string
      */
-    private function decorate($content, $css, $exception)
+    private function decorate(string $content, string $css, $exception): string
     {
         $content = $this->removeTitle($content);
 
@@ -85,11 +85,11 @@ class ErrorHandler
 
     /**
      * Removes title from content as it is same for all exceptions and has no real value.
-     * 
-     * @param  string $content
+     *
+     * @param  string  $content
      * @return string
      */
-    private function removeTitle($content)
+    private function removeTitle(string $content): string
     {
         $titles = [
             'Whoops, looks like something went wrong.',

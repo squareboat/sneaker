@@ -16,7 +16,7 @@ $ composer require squareboat/sneaker
 ```
 
 ### Add Sneaker's Exception Capturing
-
+#### For Laravel < 11
 Add exception capturing to `app/Exceptions/Handler.php`:
 
 ```php
@@ -27,6 +27,25 @@ public function report(Exception $exception)
     parent::report($exception);
 }
 ```
+
+#### For Laravel 11.x
+Add exception capturing to `bootstrap/app.php`:
+
+```php
+return Application::configure(basePath: dirname(__DIR__))
+    
+    (...)
+    
+    ->withExceptions(function (Exceptions $exceptions) {
+
+        $exceptions->report(function (\Throwable $e){
+            app('sneaker')->captureException($e);
+        });
+        
+    })->create();
+```
+
+
 
 ### Configuration File
 
@@ -86,12 +105,11 @@ public function report(Exception $exception)
 
 #### to
 
-This is the list of recipients of error emails.
+This is the list of recipients of error emails. Set it in `SNEAKER_TO=` in your `.env` file.
+Multiple addresses can be added as a comma-separated list.
 
 ```php
-'to' => [
-    // 'hello@example.com',
-],
+'to' => explode(',', env('SNEAKER_TO', '')),
 ```
 
 #### ignored_bots
