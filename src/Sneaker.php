@@ -14,28 +14,28 @@ class Sneaker
      *
      * @var \Illuminate\Config\Repository
      */
-    private $config;
+    private Repository $config;
 
     /**
      * The exception handler implementation.
      *
      * @var \SquareBoat\Sneaker\ErrorHandler
      */
-    private $handler;
+    private ErrorHandler $handler;
 
     /**
      * The mailer instance.
-     * 
+     *
      * @var \Illuminate\Contracts\Mail\Mailer
      */
-    private $mailer;
+    private Mailer $mailer;
 
     /**
      * The log writer implementation.
      *
      * @var \Psr\Log\LoggerInterface
      */
-    private $logger;
+    private LoggerInterface $logger;
 
     /**
      * Create a new sneaker instance.
@@ -63,10 +63,10 @@ class Sneaker
     /**
      * Checks an exception which should be tracked and captures it if applicable.
      *
-     * @param  Throwable|\Exception $exception
+     * @param  Throwable|\Exception  $exception
      * @return void
      */
-    public function captureException($exception, $sneaking = false)
+    public function captureException(Throwable|\Exception $exception, $sneaking = false): void
     {
         try {
             if ($this->isSilent()) {
@@ -96,11 +96,11 @@ class Sneaker
 
     /**
      * Capture an exception.
-     * 
-     * @param  \Exception|Throwable $exception
+     *
+     * @param  Throwable|\Exception  $exception
      * @return void
      */
-    private function capture($exception)
+    private function capture(Throwable|\Exception $exception): void
     {
         $recipients = $this->config->get('sneaker.to');
 
@@ -113,21 +113,21 @@ class Sneaker
 
     /**
      * Checks if sneaker is silent.
-     * 
+     *
      * @return boolean
      */
-    private function isSilent()
+    private function isSilent(): bool
     {
         return $this->config->get('sneaker.silent', false);
     }
 
     /**
      * Determine if the exception is in the "capture" list.
-     * 
-     * @param  Throwable|\Exception $exception
+     *
+     * @param  Throwable|\Exception  $exception
      * @return boolean
      */
-    private function shouldCapture($exception)
+    private function shouldCapture(Throwable|\Exception $exception): bool
     {
         $capture = $this->config->get('sneaker.capture');
 
@@ -150,10 +150,10 @@ class Sneaker
 
     /**
      * Determine if the exception is from the bot.
-     * 
+     *
      * @return boolean
      */
-    private function isExceptionFromBot()
+    private function isExceptionFromBot(): bool
     {
         $ignored_bots = $this->config->get('sneaker.ignored_bots');
 

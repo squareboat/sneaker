@@ -42,7 +42,7 @@ class ErrorMailer extends Mailable implements ShouldQueue
      *
      * @return $this
      */
-    public function build()
+    public function build(): static
     {
         return $this->view('sneaker::raw')
                     ->with('content', $this->body);

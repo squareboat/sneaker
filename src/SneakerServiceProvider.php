@@ -3,6 +3,7 @@
 namespace SquareBoat\Sneaker;
 
 use Illuminate\Support\ServiceProvider;
+use SquareBoat\Sneaker\Commands\Sneak;
 
 class SneakerServiceProvider extends ServiceProvider
 {
@@ -11,14 +12,14 @@ class SneakerServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = false;
+    protected bool $defer = false;
 
     /**
      * Bootstrap the application services.
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'sneaker');
 
@@ -32,7 +33,7 @@ class SneakerServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \SquareBoat\Sneaker\Commands\Sneak::class,
+                Sneak::class,
             ]);
         }
     }
@@ -42,7 +43,7 @@ class SneakerServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__.'/../config/sneaker.php', 'sneaker'
