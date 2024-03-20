@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\ErrorHandler\Error\FatalError;
+
 return [
 
     /*
@@ -24,7 +26,7 @@ return [
     |
     */
     'capture' => [
-        Symfony\Component\Debug\Exception\FatalErrorException::class,
+        FatalError::class,
     ],
 
     /*
@@ -36,9 +38,7 @@ return [
     |
     */
 
-    'to' => [
-        // 'hello@example.com',
-    ],
+    'to' => explode(',', env('SNEAKER_TO', '')),
 
     /*
     |--------------------------------------------------------------------------

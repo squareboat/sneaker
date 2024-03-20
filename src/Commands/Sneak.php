@@ -29,7 +29,7 @@ class Sneak extends Command
      *
      * @var \Illuminate\Config\Repository
      */
-    private $config;
+    private Repository $config;
 
     /**
      * Create a sneak command instance.
@@ -49,7 +49,7 @@ class Sneak extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->overrideConfig();
 
@@ -58,13 +58,13 @@ class Sneak extends Command
 
             $this->info('Sneaker is working fine ✅');
         } catch (Exception $e) {
-            (new ConsoleApplication)->renderException($e, $this->output);
+            (new ConsoleApplication)->renderThrowable($e, $this->output);
         }
     }
 
     /**
      * Overriding the default configurations.
-     * 
+     *
      * @return void
      */
     public function overrideConfig()

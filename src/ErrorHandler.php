@@ -3,17 +3,18 @@
 namespace SquareBoat\Sneaker;
 
 use Illuminate\View\Factory;
-use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
+use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
-class ExceptionHandler
+
+class ErrorHandler
 {
     /**
      * The view factory implementation.
-     * 
+     *
      * @var \Illuminate\View\Factory
      */
-    private $view;
+    private Factory $view;
 
     /**
      * Create a new exception handler instance.
@@ -28,11 +29,11 @@ class ExceptionHandler
 
     /**
      * Create a string for the given exception.
-     * 
+     *
      * @param  \Exception $exception
      * @return string
      */
-    public function convertExceptionToString($exception)
+    public function convertExceptionToString($exception): string
     {
         return $this->view->make('sneaker::email.subject', compact('exception'))->render();
     }
@@ -40,25 +41,26 @@ class ExceptionHandler
     /**
      * Create a html for the given exception.
      *
-     * @param  \Exception $exception
+     * @param  \Exception  $exception
      * @return string
      */
-    public function convertExceptionToHtml($exception)
+    public function convertExceptionToHtml(\Throwable $exception): string
     {
         $flat = $this->getFlattenedException($exception);
 
-        $handler = new SymfonyExceptionHandler();
+        $renderer = new HtmlErrorRenderer(true);
 
-        return $this->decorate($handler->getContent($flat), $handler->getStylesheet($flat), $flat);
+        return $this->decorate($renderer->getBody($flat), $renderer->getStylesheet($flat), $flat);
+
     }
 
     /**
      * Converts the Exception in a PHP Exception to be able to serialize it.
-     * 
-     * @param  \Exception $exception
-     * @return \Symfony\Component\Debug\Exception\FlattenException
+     *
+     * @param $exception
+     * @return FlattenException
      */
-    private function getFlattenedException($exception)
+    private function getFlattenedException($exception): FlattenException
     {
         if (!$exception instanceof FlattenException) {
             $exception = FlattenException::createFromThrowable($exception);
@@ -70,11 +72,11 @@ class ExceptionHandler
     /**
      * Get the html response content.
      *
-     * @param  string $content
-     * @param  string $css
+     * @param  string  $content
+     * @param  string  $css
      * @return string
      */
-    private function decorate($content, $css, $exception)
+    private function decorate(string $content, string $css, $exception): string
     {
         $content = $this->removeTitle($content);
 
@@ -83,11 +85,11 @@ class ExceptionHandler
 
     /**
      * Removes title from content as it is same for all exceptions and has no real value.
-     * 
-     * @param  string $content
+     *
+     * @param  string  $content
      * @return string
      */
-    private function removeTitle($content)
+    private function removeTitle(string $content): string
     {
         $titles = [
             'Whoops, looks like something went wrong.',
